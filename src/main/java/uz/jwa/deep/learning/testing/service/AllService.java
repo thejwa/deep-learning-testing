@@ -21,12 +21,13 @@ import java.util.Objects;
 public class AllService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final MockTestService mockTestService;
 
     public ResponseEntity<Book> createBook(Book book) {
         if (Objects.nonNull(book.getId()))
             throw new RuntimeException("WHILE CREATING ID MUST NOT BE SET");
-        authorRepository.findById(book.getAuthorId())
-                .orElseThrow(() -> new RuntimeException("AUTHOR NOT FOUND"));
+        if (!mockTestService.authorExists(book.getAuthorId()))
+            throw new RuntimeException("AUTHOR NOT FOUND");
         bookRepository.save(book);
         return ResponseEntity.ok(book);
     }
@@ -49,7 +50,7 @@ public class AllService {
     }
 
     public ResponseEntity<Author> getAuthorById(Long id) {
-        Author author = authorRepository.findById(id).orElseThrow(() -> new RuntimeException("BOOK NOT FOUND"));
+        Author author = authorRepository.findById(id).orElseThrow(() -> new RuntimeException("AUTHOR NOT FOUND"));
         return ResponseEntity.ok(author);
     }
 

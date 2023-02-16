@@ -1,14 +1,12 @@
 package uz.jwa.deep.learning.testing.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 /**
  * @author TheJWA (Jonibek)
@@ -19,6 +17,8 @@ import javax.persistence.Id;
 @ToString
 @RequiredArgsConstructor
 @Entity
+@AllArgsConstructor
+@Builder
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,6 @@ public class Author {
 
     private String firstName;
     private String lastName;
-    private String birthDate;
+    private LocalDate birthDate;
 
 }
